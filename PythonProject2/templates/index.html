@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart Financial Dashboard 📈</title>
+    <!-- FIX: Use Flask's url_for to correctly link static files -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.6">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+    <!-- 🛑 NEW: SPLASH SCREEN CONTAINER 🛑 -->
+    <div id="splash-screen" class="splash-container">
+        <div class="splash-content">
+            <h1>Welcome to MY SIP Investment Tracker 💰</h1>
+            <p>Your guide to making smarter financial decisions.</p>
+            <button id="start-button" class="splash-btn">Click to Continue 🚀</button>
+        </div>
+    </div>
+    <!-- 🛑 END SPLASH SCREEN 🛑 -->
+
+    <header id="main-header" class="hidden">
+        <h1>My SIP & Investment Tracker 💰</h1>
+    </header>
+
+    <div class="container hidden" id="main-dashboard">
+        <form id="recommendation-form">
+            <div class="form-group">
+                <label for="investment">Monthly Investment (₹):</label>
+                <input type="number" id="investment" name="monthlyInvestment" value="5000" required>
+            </div>
+
+            <!-- ASSET FILTER DROPDOWN -->
+            <div class="form-group">
+                <label for="assetFilter">Asset Class:</label>
+                <select id="asset-filter" name="assetFilter" required>
+                    <option value="ALL">All Assets (Default)</option>
+                    <option value="STOCK">Stocks Only</option>
+                    <option value="MF">Mutual Funds Only</option>
+                    <option value="FD">Fixed Deposits Only</option>
+                    <option value="PPF">PPF Only</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="duration">Duration (Months):</label>
+                <input type="number" id="duration" name="durationMonths" value="36" required>
+            </div>
+
+            <!-- CRITICAL FIX: Button is type="button" and uses a unique ID for JavaScript click handler -->
+            <button type="button" id="recommendation-button" class="full-width-btn">Get Top Recommendations 🚀</button>
+        </form>
+
+        <!-- Loading Animation -->
+        <div id="loading" class="loader-container hidden">
+            <div class="spinner"></div>
+            <p>Fetching real data and calculating personalized returns...</p>
+        </div>
+
+        <!-- Recommendation Cards Container -->
+        <div id="recommendations-container" class="hidden">
+            <h2 style="grid-column: span 4; text-align: center; color: #007bff;">Top Investment Options</h2>
+            <div id="card-grid" class="metrics-grid">
+                <!-- Cards will be injected here by app.js -->
+            </div>
+        </div>
+
+        <!-- The detailed results section -->
+        <div id="results" class="hidden">
+            <h2>Detailed View for <span id="result-asset-name"></span></h2>
+            <div class="metrics-grid">
+                <div>Total Invested: <span id="total-invested" class="highlight-metric"></span></div>
+                <div>Final Value: <span id="current-value" class="highlight-value highlight-metric"></span></div>
+                <div>Absolute Gain: <span id="absolute-return" class="highlight-gain highlight-metric"></span></div>
+                <div>Annualized (CAGR): <span id="cagr-return" class="highlight-cagr highlight-metric"></span></div>
+            </div>
+            <!-- Graph Container -->
+            <div class="chart-container">
+                <canvas id="navChart"></canvas>
+            </div>
+        </div>
+
+        <!-- 🛑 NEW: ADVISORY MESSAGE CONTAINER 🛑 -->
+        <div id="advisory-message" class="advisory-note hidden"></div>
+
+    </div>
+
+    <!-- Disclaimer Note (Important) -->
+    <footer class="disclaimer-note">
+        <p>⚠️ **Disclaimer:** The Stock and Mutual Fund graphs show **PAST HISTORY** based on API data and should not be considered a guarantee of future returns. Fixed Deposit (FD) graphs show a **FUTURE COMPOUNDING PROJECTION** based on the current fixed rate.</p>
+    </footer>
+
+    <!-- JS Link -->
+    <script src="{{ url_for('static', filename='app.js') }}?v=1.6"></script>
+</body>
+</html>
